@@ -34,7 +34,111 @@ public class Seller {
     public void registerSale(Customer customer, Product product, int quantity, double total, String date) {
         Sale sale = new Sale(product, quantity, total, date);
         customer.addSale(sale);
+        // decrease wallet
+        customer.setWallet(customer.getWallet() - total);
     }
 
+    public void getFeatures() {
+        //System.out.println("Benvenuto Impiegato!");
+        System.out.println("Account loggato: " + this.login + "!");
+        system.out.println("0. Esci");
+        System.out.println("1. Aggiungi cliente");
+        System.out.println("2. Modifica cliente");
+        System.out.println("3. Mostra acquisti di un cliente");
+        System.out.println("4. Aggiungi acquisto");
+        System.out.println("5. Mostra lista clienti");
+        //System.out.println("6. Annulla acquisto");
+    }
 
+    public void doFeatures(int choosenFeature) {
+        // switch case for features
+
+        switch (choosenFeature) {
+            case 0:
+                System.out.println("Grazie per aver usato il programma!");
+                break;
+            case 1:
+                System.out.println("Inserisci nome: ");
+                String name = scanner.nextLine();
+                System.out.println("Inserisci cognome: ");
+                String surname = scanner.nextLine();
+                System.out.println("Inserisci codice fiscale: ");
+                String cf = scanner.nextLine();
+                System.out.println("Inserisci indirizzo: ");
+                String address = scanner.nextLine();
+                System.out.println("Inserisci portafoglio: ");
+                double wallet = scanner.nextDouble();
+                scanner.nextLine();
+                Customer customer = createCustomer(name, surname, cf, address, wallet);
+                computerShop.addCustomer(customer);
+                System.out.println("Cliente aggiunto con successo!");
+                break;
+            case 2:
+                System.out.println("Inserisci codice fiscale del cliente da modificare: ");
+                String cfToEdit = scanner.nextLine();
+                Customer customerToEdit = computerShop.getCustomerByCf(cfToEdit);
+                if (customerToEdit != null) {
+                    System.out.println("Inserisci nuovo nome: ");
+                    String newName = scanner.nextLine();
+                    System.out.println("Inserisci nuovo cognome: ");
+                    String newSurname = scanner.nextLine();
+                    System.out.println("Inserisci nuovo codice fiscale: ");
+                    String newCf = scanner.nextLine();
+                    System.out.println("Inserisci nuovo indirizzo: ");
+                    String newAddress = scanner.nextLine();
+                    System.out.println("Inserisci nuovo portafoglio: ");
+                    double newWallet = scanner.nextDouble();
+                    scanner.nextLine();
+                    editCustomer(customerToEdit, newName, newSurname, newCf, newAddress, newWallet);
+                    System.out.println("Cliente modificato con successo!");
+                } else {
+                    System.out.println("Cliente non trovato!");
+                }
+                break;
+            case 3:
+                System.out.println("Inserisci codice fiscale del cliente: ");
+                String cfToShow = scanner.nextLine();
+                Customer customerToShow = computerShop.getCustomerByCf(cfToShow);
+                if (customerToShow != null) {
+                    showCustomerSales(customerToShow);
+                } else {
+                    System.out.println("Cliente non trovato!");
+                }
+                break;
+            case 4:
+                System.out.println("Inserisci codice fiscale del cliente: ");
+                String cfToRegister = scanner.nextLine();
+                Customer customerToRegister = computerShop.getCustomerByCf(cfToRegister);
+                if (customerToRegister != null) {
+                    System.out.println("Inserisci codice del prodotto: ");
+                    String code = scanner.nextLine();
+                    Product product = computerShop.getProductByCode(code);
+                    if (product != null) {
+                        System.out.println("Inserisci quantità: ");
+                        int quantity = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Inserisci data: ");
+                        String date = scanner.nextLine();
+                        double total = quantity * product.getPrice();
+                        if (customerToRegister.getWallet() >= total) {
+                            registerSale(customerToRegister, product, quantity, total, date);
+                            System.out.println("Acquisto registrato con successo!");
+                        } else {
+                            System.out.println("Acquisto non registrato, portafoglio insufficiente!");
+                        }
+                    } else {
+                        System.out.println("Prodotto non trovato!");
+                    }
+                } else {
+                    System.out.println("Cliente non trovato!");
+                }
+                break;
+            case 5:
+                computerShop.printCustomers();
+                break;
+            default:
+                System.out.println("Scelta non valida!");
+                break;
+
+    }
 }

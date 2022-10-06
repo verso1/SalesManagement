@@ -7,7 +7,7 @@ public class Sale {
     public Sale(Product product, int quantity, double total, string date) {
         this.product = product;
         this.quantity = quantity;
-        this.total = total;
+        this.total = prodotto.getUprice() * quantity;
         this.date = date;
     }
 
