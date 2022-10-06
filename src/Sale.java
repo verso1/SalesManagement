@@ -2,12 +2,12 @@ public class Sale {
     private Product product;
     private int quantity;
     private double total;
-    private string date;
+    private String date;
 
-    public Sale(Product product, int quantity, double total, string date) {
+    public Sale(Product product, int quantity, double total, String date) {
         this.product = product;
         this.quantity = quantity;
-        this.total = prodotto.getUprice() * quantity;
+        this.total = product.getUprice() * quantity;
         this.date = date;
     }
 
@@ -23,12 +23,16 @@ public class Sale {
         return total;
     }
 
-    public string getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void print() {
-        System.out.println("Sale: " + product.print() + " - " + quantity + " - " + total + " - " + date);
+    public void printInfo() {
+        product.print();
+        System.out.println("Quantity: " + quantity);
+        System.out.println("Total: " + total);
+        System.out.println("Date: " + date);
+        System.out.println("\n");
     }
 
 }

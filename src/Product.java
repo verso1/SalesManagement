@@ -1,14 +1,17 @@
 public class Product {
+    private int id;
     private String name;
     private String manufacturer;
     private double uprice;
 
-    public Product(String name, String manufacturer, double uprice) {
+    public Product(int id, String name, String manufacturer, double uprice) {
+        this.id = id;
         this.name = name;
         this.manufacturer = manufacturer;
         this.uprice = uprice;
     }
 
+    public int getId() { return id; }
     public String getName() {
         return name;
     }
@@ -20,7 +23,6 @@ public class Product {
     public double getUprice() {
         return uprice;
     }
-
     public void setUprice(double uprice) {
         this.uprice = uprice;
     }
