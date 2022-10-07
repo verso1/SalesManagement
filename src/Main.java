@@ -17,31 +17,42 @@ public class Main {
         computerShop.addCustomer(customer1);
         computerShop.addCustomer(customer2);
 
-        // ask user to login
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Prego effettuare login: ");
-        System.out.println("Username: ");
-        String username = scanner.nextLine();
-        System.out.println("Password: ");
-        String password = scanner.nextLine();
+        // keep asking if the user wants to login until he wants to exit the program
+        boolean exit = false;
 
-        Sale sale = new Sale(computer1, 1, 1000, "01/01/2020");
-        customer1.addSale(sale);
+        while (!exit) {
+            // ask for login
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Inserisci il tuo username:");
+            String login = scanner.nextLine();
+            System.out.println("Inserisci la tua password:");
+            String password = scanner.nextLine();
 
-
-        // check if user is admin of computerShop
-        if (username.equals(admin.getLogin()) && password.equals(admin.getPassword())) {
-            // admin features
-            admin.getFeatures();
-            int choosenFeature = scanner.nextInt();
-            admin.doFeatures(choosenFeature, computerShop);
-        } else if (username.equals(seller1.getLogin()) && password.equals(seller1.getPassword())) {
-            // seller features
-            seller1.getFeatures();
-            int choosenFeature = scanner.nextInt();
-            seller1.doFeatures(choosenFeature, computerShop);
-        } else {
-            System.out.println("Login non valido!");
+            // check if the user is an admin
+            if (admin.getLogin().equals(login) && admin.getPassword().equals(password)) {
+                // show admin features
+                // keep asking for a feature until the user chooses to exit
+                boolean exitAdmin = false;
+                while(!exitAdmin) {
+                    admin.getFeatures();
+                    int choosenFeature = scanner.nextInt();
+                    admin.doFeatures(choosenFeature, computerShop, exitAdmin);
+                }
+            }
+            // check if the user is a seller
+            else if (seller1.getLogin().equals(login) && seller1.getPassword().equals(password)) {
+                // show seller features
+                boolean exitSeller = false;
+                while(!exitSeller) {
+                    seller1.getFeatures();
+                    int choosenFeature = scanner.nextInt();
+                    seller1.doFeatures(choosenFeature, computerShop, exitSeller);
+                }
+            }
+            // if the user is not an admin, a seller or a customer
+            else {
+                System.out.println("Username o password errati!");
+            }
         }
 
         /*
@@ -50,6 +61,9 @@ public class Main {
         customer1.printSales();
 
          */
+    }
+    void login() {
 
-}
+
+    }
 }
