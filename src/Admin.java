@@ -20,8 +20,8 @@ public class Admin extends Seller {
     }
 
 
-    public void doFeatures(int choosenFeature, Shop choosenShop) {
-        super.doFeatures(choosenFeature, choosenShop);
+    public void doFeatures(int choosenFeature, Shop choosenShop, boolean exit) {
+        super.doFeatures(choosenFeature, choosenShop, exit);
         Scanner scanner = new Scanner(System.in);
 
         switch (choosenFeature) {
