@@ -24,11 +24,16 @@ public class Seller {
 
     // edit Customer
     public void editCustomer(Customer customer, String name, String surname, String cf, String address, double wallet) {
-        customer.setName(name);
-        customer.setSurname(surname);
-        customer.setCf(cf);
-        customer.setAddress(address);
-        customer.setWallet(wallet);
+        if (!name.equals("")) { customer.setName(name); }
+
+        if (!surname.equals("")) { customer.setSurname(surname); }
+
+        if (!cf.equals("")) { customer.setCf(cf); }
+
+        if (!address.equals("")) { customer.setAddress(address);}
+
+        // cast wallet to a string and check if it's not empty
+        if (!String.valueOf(wallet).equals("")) { customer.setWallet(wallet); }
     }
 
     // show customer's list of sales
@@ -92,10 +97,17 @@ public class Seller {
                         String newCf = scanner.nextLine();
                         System.out.println("Inserisci nuovo indirizzo: ");
                         String newAddress = scanner.nextLine();
-                        System.out.println("Inserisci nuovo portafoglio: ");
-                        double newWallet = scanner.nextDouble();
-                        scanner.nextLine();
-                        editCustomer(customerToEdit, newName, newSurname, newCf, newAddress, newWallet);
+                        // ask if the user wants to change the wallet
+                        System.out.println("Vuoi modificare il portafoglio? (y/n)");
+                        String changeWallet = scanner.nextLine();
+                        if (changeWallet.equals("y")) {
+                            System.out.println("Inserisci nuovo portafoglio: ");
+                            double newWallet = scanner.nextDouble();
+                            scanner.nextLine();
+                            editCustomer(customerToEdit, newName, newSurname, newCf, newAddress, newWallet);
+                        } else {
+                            editCustomer(customerToEdit, newName, newSurname, newCf, newAddress, customerToEdit.getWallet());
+                        }
                         System.out.println("Cliente modificato con successo!");
                     } else {
                         System.out.println("Cliente non trovato!");
