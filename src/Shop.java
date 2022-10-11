@@ -52,11 +52,24 @@ public class Shop {
         }
         return null;
     }
-
-    // get customers
+    public Seller getSellerByLogin(String login) {
+        for (Seller s : sellers) {
+            if (s.getLogin().equals(login)) {
+                return s;
+            }
+        }
+        return null;
+    }
     public void printCustomers() {
         for (Customer customer : customers) {
             customer.printInfo();
+            System.out.println();
+        }
+    }
+
+    public void printSellers() {
+        for (Seller seller : sellers) {
+            seller.printInfo();
         }
     }
 
