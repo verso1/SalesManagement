@@ -49,18 +49,11 @@ public class Main {
                     seller1.doFeatures(choosenFeature, computerShop, exitSeller);
                 }
             }
-            // if the user is not an admin, a seller or a customer
+            // if the user is not an admin or a seller
             else {
                 System.out.println("Username o password errati!");
             }
         }
-
-        /*
-        customer1.printSales();
-        admin.undoSale(customer1, sale);
-        customer1.printSales();
-
-         */
     }
     void login() {
 
