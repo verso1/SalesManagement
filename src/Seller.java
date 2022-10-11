@@ -12,9 +12,16 @@ public class Seller {
     public String getLogin() {
         return login;
     }
-
     public String getPassword() {
         return password;
+    }
+    public void setPassword(String password) { this.password = password; }
+    public void setLogin(String login) { this.login = login; }
+
+    // print customer info
+    public void printInfo() {
+        System.out.println("Login: " + login);
+        System.out.println("Password: " + password);
     }
 
     // create new Customer
@@ -35,20 +42,25 @@ public class Seller {
         // cast wallet to a string and check if it's not empty
         if (!String.valueOf(wallet).equals("")) { customer.setWallet(wallet); }
     }
-
-    // show customer's list of sales
-    public void showCustomerSales(Customer customer) {
-        customer.printSales();
-    }
-
-    // register a new sale to a customer
+    public void showCustomerSales(Customer customer) { customer.printSales(); }
     public void registerSale(Customer customer, Product product, int quantity, double total, String date) {
         Sale sale = new Sale(product, quantity, total, date);
         customer.addSale(sale);
-        // decrease wallet
         customer.setWallet(customer.getWallet() - total);
     }
 
+    public void editPassword() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci la vecchia password: ");
+        String oldPassword = scanner.nextLine();
+        if (oldPassword.equals(this.password)) {
+            System.out.println("Inserisci la nuova password: ");
+            String newPassword = scanner.nextLine();
+            this.password = newPassword;
+        } else {
+            System.out.println("Password errata!");
+        }
+    }
     public void getFeatures() {
         System.out.println("Account loggato: " + this.login + "!");
         System.out.println("0. Esci");
@@ -57,6 +69,7 @@ public class Seller {
         System.out.println("3. Mostra acquisti di un cliente");
         System.out.println("4. Aggiungi acquisto");
         System.out.println("5. Mostra lista clienti");
+        System.out.println("6. Modifica la tua password");
         }
     public void doFeatures(int choosenFeature, Shop choosenShop, boolean exit) {
         Scanner scanner = new Scanner(System.in);
@@ -156,6 +169,11 @@ public class Seller {
                 case 5:
                     choosenShop.printCustomers();
                     break;
+                case 6:
+                    editPassword();
+                    System.out.println("Password modificata con successo!");
+                    break;
+                    
                 default:
                     System.out.println("Scelta non valida!");
                     break;
