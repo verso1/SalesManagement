@@ -48,14 +48,12 @@ public class Admin extends Seller {
     }
 
     @Override
-    public void doFeatures(int choosenFeature, Shop choosenShop, boolean exit) {
-
+    public boolean doFeatures(int choosenFeature, Shop choosenShop) {
         switch (choosenFeature) {
             case 0:
                 System.out.println("Grazie per aver usato il programma!");
                 // TODO aggiustare la condizione di uscita
-                exit = true;
-                break;
+                return false;
             case 1:
                 System.out.println("Inserisci nome: ");
                 String name = Main.scanner.nextLine();
@@ -230,5 +228,6 @@ public class Admin extends Seller {
                 System.out.println("Scelta non valida!");
                 break;
         }
+        return true;
     }
 }
