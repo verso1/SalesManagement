@@ -52,6 +52,7 @@ public class Shop {
         }
         return null;
     }
+
     public Seller getSellerByLogin(String login) {
         for (Seller s : sellers) {
             if (s.getLogin().equals(login)) {
