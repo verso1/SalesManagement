@@ -72,7 +72,6 @@ public class Seller {
         System.out.println("6. Modifica la tua password");
         }
     public void doFeatures(int choosenFeature, Shop choosenShop, boolean exit) {
-        Scanner scanner = new Scanner(System.in);
         // keep asking for a feature until the user chooses to exit
             switch (choosenFeature) {
                 case 0:
@@ -81,16 +80,16 @@ public class Seller {
                     break;
                 case 1:
                     System.out.println("Inserisci nome: ");
-                    String name = scanner.nextLine();
+                    String name = Main.scanner.nextLine();
                     System.out.println("Inserisci cognome: ");
-                    String surname = scanner.nextLine();
+                    String surname = Main.scanner.nextLine();
                     System.out.println("Inserisci codice fiscale: ");
-                    String cf = scanner.nextLine();
+                    String cf = Main.scanner.nextLine();
                     System.out.println("Inserisci indirizzo: ");
-                    String address = scanner.nextLine();
+                    String address = Main.scanner.nextLine();
                     System.out.println("Inserisci portafoglio: ");
-                    double wallet = scanner.nextDouble();
-                    scanner.nextLine();
+                    double wallet = Main.scanner.nextDouble();
+                    Main.scanner.nextLine();
                     Customer customer = createCustomer(name, surname, cf, address, wallet);
 
                     choosenShop.addCustomer(customer);
@@ -99,24 +98,24 @@ public class Seller {
                 case 2:
                     choosenShop.printCustomers();
                     System.out.println("Inserisci codice fiscale del cliente da modificare: ");
-                    String cfToEdit = scanner.nextLine();
+                    String cfToEdit = Main.scanner.nextLine();
                     Customer customerToEdit = choosenShop.getCustomerByCf(cfToEdit);
                     if (customerToEdit != null) {
                         System.out.println("Inserisci nuovo nome: ");
-                        String newName = scanner.nextLine();
+                        String newName = Main.scanner.nextLine();
                         System.out.println("Inserisci nuovo cognome: ");
-                        String newSurname = scanner.nextLine();
+                        String newSurname = Main.scanner.nextLine();
                         System.out.println("Inserisci nuovo codice fiscale: ");
-                        String newCf = scanner.nextLine();
+                        String newCf = Main.scanner.nextLine();
                         System.out.println("Inserisci nuovo indirizzo: ");
-                        String newAddress = scanner.nextLine();
+                        String newAddress = Main.scanner.nextLine();
                         // ask if the user wants to change the wallet
                         System.out.println("Vuoi modificare il portafoglio? (y/n)");
-                        String changeWallet = scanner.nextLine();
+                        String changeWallet = Main.scanner.nextLine();
                         if (changeWallet.equals("y")) {
                             System.out.println("Inserisci nuovo portafoglio: ");
-                            double newWallet = scanner.nextDouble();
-                            scanner.nextLine();
+                            double newWallet = Main.scanner.nextDouble();
+                            Main.scanner.nextLine();
                             editCustomer(customerToEdit, newName, newSurname, newCf, newAddress, newWallet);
                         } else {
                             editCustomer(customerToEdit, newName, newSurname, newCf, newAddress, customerToEdit.getWallet());
@@ -130,7 +129,7 @@ public class Seller {
                     // show customers
                     choosenShop.printCustomers();
                     System.out.println("Inserisci codice fiscale del cliente: ");
-                    String cfToShow = scanner.nextLine();
+                    String cfToShow = Main.scanner.nextLine();
                     Customer customerToShow = choosenShop.getCustomerByCf(cfToShow);
                     if (customerToShow != null) {
                         customerToShow.printSales();
@@ -140,18 +139,18 @@ public class Seller {
                     break;
                 case 4:
                     System.out.println("Inserisci codice fiscale del cliente: ");
-                    String cfToRegister = scanner.nextLine();
+                    String cfToRegister = Main.scanner.nextLine();
                     Customer customerToRegister = choosenShop.getCustomerByCf(cfToRegister);
                     if (customerToRegister != null) {
                         System.out.println("Inserisci codice del prodotto: ");
-                        int code = scanner.nextInt();
+                        int code = Main.scanner.nextInt();
                         Product product = choosenShop.getProductById(code);
                         if (product != null) {
                             System.out.println("Inserisci quantità: ");
-                            int quantity = scanner.nextInt();
-                            scanner.nextLine();
+                            int quantity = Main.scanner.nextInt();
+                            Main.scanner.nextLine();
                             System.out.println("Inserisci data: ");
-                            String date = scanner.nextLine();
+                            String date = Main.scanner.nextLine();
                             double total = quantity * product.getUprice();
                             if (customerToRegister.getWallet() >= total) {
                                 registerSale(customerToRegister, product, quantity, total, date);
@@ -173,7 +172,7 @@ public class Seller {
                     editPassword();
                     System.out.println("Password modificata con successo!");
                     break;
-                    
+
                 default:
                     System.out.println("Scelta non valida!");
                     break;
