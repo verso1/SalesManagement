@@ -1,7 +1,10 @@
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Scanner;
 
 public class Main {
     // main method
+    public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
 
         Shop computerShop = new Shop("Computer Shop");
@@ -11,52 +14,72 @@ public class Main {
         Product computer2 = new Product(2,"Laptop", "HP", 800);
         Admin admin = new Admin("admin", "admin");
         Seller seller1 = new Seller("seller1", "seller1");
+        Seller seller2 = new Seller("seller2", "seller2");
 
         computerShop.addAdmin(admin);
         computerShop.addSeller(seller1);
         computerShop.addCustomer(customer1);
         computerShop.addCustomer(customer2);
 
-        // keep asking if the user wants to login until he wants to exit the program
+        // i keep asking if the user wants to login until he wants to exit the program
         boolean exit = false;
 
         while (!exit) {
-            // ask for login
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Inserisci il tuo username:");
-            String login = scanner.nextLine();
-            System.out.println("Inserisci la tua password:");
-            String password = scanner.nextLine();
+            System.out.println("Scegli a quale shop accedere:");
+            System.out.println("1. Computer Shop");
+            //System.out.println("2. Book Shop");
+            System.out.println("2. Exit");
 
-            // check if the user is an admin
-            if (admin.getLogin().equals(login) && admin.getPassword().equals(password)) {
-                // show admin features
-                // keep asking for a feature until the user chooses to exit
-                boolean exitAdmin = false;
-                while(!exitAdmin) {
-                    admin.getFeatures();
-                    int choosenFeature = scanner.nextInt();
-                    admin.doFeatures(choosenFeature, computerShop, exitAdmin);
-                }
+            int choice = Main.scanner.nextInt();
+            Main.scanner.nextLine();
+
+            switch(choice){
+                case 1:
+                    login(computerShop, exit);
+                    break;
+                case 2:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Scelta non valida");
+                    break;
             }
-            // check if the user is a seller
-            else if (seller1.getLogin().equals(login) && seller1.getPassword().equals(password)) {
-                // show seller features
-                boolean exitSeller = false;
-                while(!exitSeller) {
-                    seller1.getFeatures();
-                    int choosenFeature = scanner.nextInt();
-                    seller1.doFeatures(choosenFeature, computerShop, exitSeller);
-                }
-            }
-            // if the user is not an admin or a seller
-            else {
-                System.out.println("Username o password errati!");
-            }
+
         }
     }
-    void login() {
 
+    public static void login(@NotNull Shop choosenShop, boolean exit) {
+        while (!exit) {
+            System.out.println("Inserisci il tuo username:");
+            String login = Main.scanner.nextLine();
 
+            System.out.println("Inserisci la tua password:");
+            String password = Main.scanner.nextLine();
+
+            for (Admin a : choosenShop.getAdmins()) {
+                if (a.getLogin().equals(login) && a.getPassword().equals(password)) {
+                    boolean exitAdmin = false;
+                    while (!exitAdmin) {
+                        a.getFeatures();
+                        int choosenFeature = Main.scanner.nextInt();
+                        a.doFeatures(choosenFeature, choosenShop, exitAdmin);
+                    }
+                } else {
+                    System.out.println("Le credenziali inserite non ti consentono l'accesso come amministratore");
+                }
+            }
+            for (Seller s : choosenShop.getSellers()) {
+                if (s.getLogin().equals(login) && s.getPassword().equals(password)) {
+                    boolean exitSeller = false;
+                    while (!exitSeller) {
+                        s.getFeatures();
+                        int choosenFeature = Main.scanner.nextInt();
+                        s.doFeatures(choosenFeature, choosenShop, exitSeller);
+                    }
+                } else {
+                    System.out.println("Username o password errati\n");
+                }
+            }
+        }
     }
 }
