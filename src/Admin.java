@@ -198,7 +198,7 @@ public class Admin extends Seller {
                 System.out.println("Lista dipendenti: ");
                 choosenShop.printSellers();
                 Main.scanner.nextLine();
-                
+
                 System.out.println("Inserisci il login del dipendente: ");
                 String loginSeller = Main.scanner.nextLine();
                 Seller sellerToReset = choosenShop.getSellerByLogin(loginSeller);

@@ -49,6 +49,7 @@ public class Main {
     }
 
     public static void login(@NotNull Shop choosenShop, boolean exit) {
+        // TODO trovare il modo di liberarsi di quei booleani
         while (!exit) {
             System.out.println("Inserisci il tuo username:");
             String login = Main.scanner.nextLine();
