@@ -71,13 +71,12 @@ public class Seller {
         System.out.println("5. Mostra lista clienti");
         System.out.println("6. Modifica la tua password");
         }
-    public void doFeatures(int choosenFeature, Shop choosenShop, boolean exit) {
+    public boolean doFeatures(int choosenFeature, Shop choosenShop) {
         // keep asking for a feature until the user chooses to exit
             switch (choosenFeature) {
                 case 0:
                     System.out.println("Grazie per aver usato il programma!");
-                    exit = true;
-                    break;
+                    return false;
                 case 1:
                     System.out.println("Inserisci nome: ");
                     String name = Main.scanner.nextLine();
@@ -178,5 +177,6 @@ public class Seller {
                     break;
 
             }
+            return true;
         }
 }
