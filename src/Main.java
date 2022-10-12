@@ -21,10 +21,7 @@ public class Main {
         computerShop.addCustomer(customer1);
         computerShop.addCustomer(customer2);
 
-        // i keep asking if the user wants to login until he wants to exit the program
-        boolean exit = false;
-
-        while (!exit) {
+        while (true) {
             System.out.println("Scegli a quale shop accedere:");
             System.out.println("1. Computer Shop");
             //System.out.println("2. Book Shop");
@@ -35,7 +32,7 @@ public class Main {
 
             switch(choice){
                 case 1:
-                    login(computerShop, exit);
+                    login(computerShop);
                     break;
                 case 2:
                     System.exit(0);
@@ -48,39 +45,55 @@ public class Main {
         }
     }
 
-    public static void login(@NotNull Shop choosenShop, boolean exit) {
-        // TODO trovare il modo di liberarsi di quei booleani
-        while (!exit) {
+    public static void login(@NotNull Shop choosenShop) {
+        while (true) {
             System.out.println("Inserisci il tuo username:");
             String login = Main.scanner.nextLine();
-
             System.out.println("Inserisci la tua password:");
             String password = Main.scanner.nextLine();
 
-            for (Admin a : choosenShop.getAdmins()) {
-                if (a.getLogin().equals(login) && a.getPassword().equals(password)) {
-                    boolean exitAdmin = false;
-                    while (!exitAdmin) {
-                        a.getFeatures();
-                        int choosenFeature = Main.scanner.nextInt();
-                        a.doFeatures(choosenFeature, choosenShop, exitAdmin);
-                    }
-                } else {
-                    System.out.println("Le credenziali inserite non ti consentono l'accesso come amministratore");
-                }
+            if (!checkAdmin(login, password, choosenShop) && !checkSeller(login, password, choosenShop)) {
+                System.out.println("Username o password errati!");
+            } else {
+                break;
             }
-            for (Seller s : choosenShop.getSellers()) {
-                if (s.getLogin().equals(login) && s.getPassword().equals(password)) {
-                    boolean exitSeller = false;
-                    while (!exitSeller) {
-                        s.getFeatures();
-                        int choosenFeature = Main.scanner.nextInt();
-                        s.doFeatures(choosenFeature, choosenShop, exitSeller);
-                    }
-                } else {
-                    System.out.println("Username o password errati\n");
+
+        }
+    }
+
+    public static boolean checkAdmin(String login, String password, Shop choosenShop) {
+        for (Admin a : choosenShop.getAdmins()) {
+            if (a.getLogin().equals(login) && a.getPassword().equals(password)) {
+                while (true) {
+                    a.getFeatures();
+                    int choosenFeature = Main.scanner.nextInt();
+                    Main.scanner.nextLine();
+                    if (!a.doFeatures(choosenFeature, choosenShop))
+                        break;
                 }
+            } else {
+                return false;
+                //System.out.println("Le credenziali inserite non ti consentono l'accesso come amministratore");
             }
         }
+        return true;
+    }
+
+    public static boolean checkSeller(String login, String password, Shop choosenShop) {
+        for (Seller s : choosenShop.getSellers()) {
+            if (s.getLogin().equals(login) && s.getPassword().equals(password)) {
+                while (true) {
+                    s.getFeatures();
+                    int choosenFeature = Main.scanner.nextInt();
+                    Main.scanner.nextLine();
+                    if (!s.doFeatures(choosenFeature, choosenShop))
+                        break;
+                }
+            } else {
+                return false;
+                //System.out.println("Le credenziali inserite non ti consentono l'accesso come venditore");
+            }
+        }
+        return true;
     }
 }
