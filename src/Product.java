@@ -20,9 +20,7 @@ public class Product {
         return manufacturer;
     }
 
-    public double getUprice() {
-        return uprice;
-    }
+    public double getUprice() { return uprice; }
     public void setUprice(double uprice) {
         this.uprice = uprice;
     }
